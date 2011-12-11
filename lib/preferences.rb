@@ -172,6 +172,9 @@ module Preferences
       name = name.to_s
       # set group name from preference_for
       args.last.merge!({:group_defaults => {@group_name => args.last[:default]}}) if @group_name
+      # enable short alias
+      short_alias = args.last.delete(:alias) rescue false
+
       definition = PreferenceDefinition.new(name, *args)
       self.preference_definitions[name] = definition
       
@@ -184,44 +187,52 @@ module Preferences
         preferred?(name, group.first)
       end
       alias_method "prefers_#{name}?", "preferred_#{name}?"
+      alias_method "#{name}?", "preferred_#{name}?" if short_alias
       
       # Reader
       define_method("preferred_#{name}") do |*group|
         preferred(name, group.first)
       end
       alias_method "prefers_#{name}", "preferred_#{name}"
+      alias_method name, "preferred_#{name}" if short_alias
       
       # Writer
       define_method("preferred_#{name}=") do |*args|
         write_preference(*args.flatten.unshift(name))
       end
       alias_method "prefers_#{name}=", "preferred_#{name}="
+      alias_method "#{name}=", "preferred_#{name}=" if short_alias
       
       # Changes
       define_method("preferred_#{name}_changed?") do |*group|
         preference_changed?(name, group.first)
       end
       alias_method "prefers_#{name}_changed?", "preferred_#{name}_changed?"
+      alias_method "#{name}_changed?", "preferred_#{name}_changed?" if short_alias
       
       define_method("preferred_#{name}_was") do |*group|
         preference_was(name, group.first)
       end
       alias_method "prefers_#{name}_was", "preferred_#{name}_was"
+      alias_method "#{name}_was", "preferred_#{name}_was" if short_alias
       
       define_method("preferred_#{name}_change") do |*group|
         preference_change(name, group.first)
       end
       alias_method "prefers_#{name}_change", "preferred_#{name}_change"
+      alias_method "#{name}_change", "preferred_#{name}_change" if short_alias
       
       define_method("preferred_#{name}_will_change!") do |*group|
         preference_will_change!(name, group.first)
       end
       alias_method "prefers_#{name}_will_change!", "preferred_#{name}_will_change!"
+      alias_method "#{name}_will_change!", "preferred_#{name}_will_change!" if short_alias
       
       define_method("reset_preferred_#{name}!") do |*group|
         reset_preference!(name, group.first)
       end
       alias_method "reset_prefers_#{name}!", "reset_preferred_#{name}!"
+      alias_method "reset_#{name}!", "reset_preferred_#{name}!" if short_alias
       
       definition
     end
