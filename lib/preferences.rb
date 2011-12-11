@@ -170,6 +170,8 @@ module Preferences
       
       # Create the definition
       name = name.to_s
+      # set group name from preference_for
+      args.last.merge!({:group_defaults => {@group_name => args.last[:default]}}) if @group_name
       definition = PreferenceDefinition.new(name, *args)
       self.preference_definitions[name] = definition
       
@@ -223,6 +225,14 @@ module Preferences
       
       definition
     end
+
+    # use a block for setting up the preference with group name
+    def preference_for(group_name, &block)
+      @group_name = group_name
+      block.call
+      @group_name = nil
+    end
+
   end
   
   module ClassMethods #:nodoc:
