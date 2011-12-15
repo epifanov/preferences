@@ -12,8 +12,8 @@ example:
   end
 
 :alias => true enabling short alias methods:
-@user.timezone # => +0800
-@user.timezone = "+0800"
+  @user.timezone # => +0800
+  @user.timezone = "+0800"
 
 
 
