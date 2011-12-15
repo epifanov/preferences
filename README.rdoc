@@ -1,3 +1,23 @@
+== Changes for this fork
+Add MacroMethods preference_for: use a block for setting up the preference with group name
+Add :alias option for defining shortcut methods
+
+example:
+
+  class User < ActiveRecord::Base
+    # use a block for setting up the preference with group name
+    preference_for :settings do
+      preference :timezone, :string, :default => "+0800", :alias => true
+    end
+  end
+
+:alias => true enabling short alias methods:
+@user.timezone # => +0800
+@user.timezone = "+0800"
+
+
+
+
 == preferences http://travis-ci.org/pluginaweek/preferences.png
 
 +preferences+ adds support for easily creating custom preferences for models.
