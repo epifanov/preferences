@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.description       = "Adds support for easily creating custom preferences for ActiveRecord models"
   s.summary           = "Custom preferences for ActiveRecord models"
   s.require_paths     = ["lib"]
-  s.files             = `git ls-files`.split("\n")
-  s.test_files        = `git ls-files -- test/*`.split("\n")
+  s.files             = Dir['CHANGELOG.rdoc', 'LICENSE', 'README.rdoc', 'Gemfile', 'Rakefile', 'preferences.gemspec', 'lib/**/*', 'app/**/*']
+  s.test_files        = Dir['test/**/*']
   s.rdoc_options      = %w(--line-numbers --inline-source --title preferences --main README.rdoc)
   s.extra_rdoc_files  = %w(README.rdoc CHANGELOG.rdoc LICENSE)
   
